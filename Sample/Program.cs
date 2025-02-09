@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-RedisSingleton.Initialize("redis-13464.c81.us-east-1-2.ec2.redns.redis-cloud.com", 13464, "4TdQe8UepIdXwrGBGSJwTl5s1nsvYpgN");
+RedisSingleton.Initialize("host", port: 0000, "password");
 
 builder.Services.AddRedisIdentityStores<ApplicationUser, ApplicationRole>();
 

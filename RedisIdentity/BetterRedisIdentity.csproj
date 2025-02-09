@@ -8,6 +8,14 @@
 	<AssemblyVersion>1.0.0.0</AssemblyVersion>
 	<FileVersion>$(AssemblyVersion)</FileVersion>
 	<Version>$(AssemblyVersion)</Version>
+	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	<Title>Better Redis Identity</Title>
+	<Description>A better way to use Redis and Identity together.</Description>
+	<PackageProjectUrl>https://github.com/BrylyMaeder/BetterRedisIdentity</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/BrylyMaeder/BetterRedisIdentity</RepositoryUrl>
+	<PackageTags>Redis, Identity, Query, Fast, Speed, Performance</PackageTags>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +27,17 @@
 
   <ItemGroup>
     <Folder Include="Interface\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -180,8 +180,8 @@ namespace BetterRedisIdentity.Stores
             {
                 var claimDocument = IdentityClaimDocument.Create(claim);
 
-                await claimDocument.Users.AddAsync(user);
-                await user.Security.Document.Claims.AddAsync(claimDocument);
+                await claimDocument.Users.AddOrUpdateAsync(user);
+                await user.Security.Document.Claims.AddOrUpdateAsync(claimDocument);
             }
         }
 
@@ -315,7 +315,7 @@ namespace BetterRedisIdentity.Stores
         {
             var externalLogin = ExternalLoginDocument.Create(login);
 
-            await Task.WhenAll(user.Security.Document.Logins.AddAsync(externalLogin),
+            await Task.WhenAll(user.Security.Document.Logins.AddOrUpdateAsync(externalLogin),
                 externalLogin.User.SetAsync(user),
                 externalLogin.LoginInfo.SetAsync(login));
         }
@@ -424,7 +424,7 @@ namespace BetterRedisIdentity.Stores
             if (role == null)
                 throw new InvalidOperationException($"Role '{roleName}' does not exist.");
 
-            await Task.WhenAll(user.Security.Document.Roles.AddAsync(role), role.Users.AddAsync(user));
+            await Task.WhenAll(user.Security.Document.Roles.AddOrUpdateAsync(role), role.Users.AddOrUpdateAsync(user));
         }
 
         public async Task RemoveFromRoleAsync(TUser user, string roleName, CancellationToken cancellationToken)

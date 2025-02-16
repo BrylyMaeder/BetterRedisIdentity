@@ -29,7 +29,8 @@ namespace BetterRedisIdentity.Stores
 
         public async Task<string?> GetUserNameAsync(TUser user, CancellationToken cancellationToken)
         {
-            return await user.UserName.GetAsync();
+            var username = await user.UserName.GetAsync();
+            return username;
         }
 
         public async Task SetUserNameAsync(TUser user, string? userName, CancellationToken cancellationToken)
@@ -94,7 +95,8 @@ namespace BetterRedisIdentity.Stores
             if (string.IsNullOrWhiteSpace(normalizedUserName))
                 throw new ArgumentException("User name cannot be null, empty, or consist only of whitespace.", nameof(normalizedUserName));
 
-            var results = await QueryBuilder.Query<TUser>(s => s.NormalizedUsername == normalizedUserName).ToListAsync(1, 1);
+            var query = QueryBuilder.Query<TUser>(s => s.NormalizedUsername == normalizedUserName);
+            var results = await query.ToListAsync(1, 1);
 
             return results.FirstOrDefault();
         }

@@ -1,5 +1,6 @@
 ﻿using AsyncRedisDocuments;
 using AsyncRedisDocuments.Index;
+using AsyncRedisDocuments.QueryBuilder;
 using Microsoft.AspNetCore.Identity;
 
 namespace BetterRedisIdentity.Stores
@@ -35,8 +36,10 @@ namespace BetterRedisIdentity.Stores
 
         public async Task<TRole?> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
-            var result = await QueryExecutor.Query<TRole>().TextExact(s => s.NameNormalized, normalizedRoleName).SearchAsync();
+            var result = await QueryBuilder.Query<TRole>(s => s.NameNormalized == normalizedRoleName).ToListAsync(1, 1);
+
             return result.FirstOrDefault();
+
         }
 
         public async Task<string?> GetNormalizedRoleNameAsync(TRole role, CancellationToken cancellationToken)

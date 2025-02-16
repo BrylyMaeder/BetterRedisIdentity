@@ -20,7 +20,8 @@ namespace BetterRedisIdentity
 
         public AsyncProperty<DateTime> CreatedDate => new(this);
 
-        public UniqueProperty<string> Name => new(this);
+        [Unique]
+        public AsyncProperty<string> Name => new(this);
 
         public AsyncProperty<string> NameNormalized => new(this);
 

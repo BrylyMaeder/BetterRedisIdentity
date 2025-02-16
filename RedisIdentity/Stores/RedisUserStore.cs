@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using BetterRedisIdentity.Data;
 using BetterRedisIdentity.Util;
 using System.Security.Claims;
+using AsyncRedisDocuments.QueryBuilder;
 
 namespace BetterRedisIdentity.Stores
 {
@@ -93,10 +94,8 @@ namespace BetterRedisIdentity.Stores
             if (string.IsNullOrWhiteSpace(normalizedUserName))
                 throw new ArgumentException("User name cannot be null, empty, or consist only of whitespace.", nameof(normalizedUserName));
 
-            var results = await QueryExecutor.Query<TUser>().Tag(s => s.NormalizedUsername, normalizedUserName).SearchAsync();
+            var results = await QueryBuilder.Query<TUser>(s => s.NormalizedUsername == normalizedUserName).ToListAsync(1, 1);
 
-            if (results == null)
-                return null;
             return results.FirstOrDefault();
         }
 
@@ -154,8 +153,8 @@ namespace BetterRedisIdentity.Stores
 
         public async Task<TUser?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
-            var users = await QueryExecutor.Query<TUser>().Tag(s => s.Email, normalizedEmail).SearchAsync();
-            return users.FirstOrDefault();
+            var result = await QueryBuilder.Query<TUser>(s => s.NormalizedEmail == normalizedEmail).ToListAsync(1, 1);
+            return result.FirstOrDefault();
         }
 
         public async Task<string?> GetNormalizedEmailAsync(TUser user, CancellationToken cancellationToken)
@@ -468,7 +467,8 @@ namespace BetterRedisIdentity.Stores
             if (role == null)
                 throw new InvalidOperationException($"Role '{roleName}' does not exist.");
 
-            return await QueryExecutor.GetAllAsync<TUser>();
+
+            return (IList<TUser>)await role.Users.GetAllAsync();
         }
         #endregion
 

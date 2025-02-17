@@ -1,6 +1,4 @@
 ﻿using AsyncRedisDocuments;
-using AsyncRedisDocuments.Index;
-using AsyncRedisDocuments.QueryBuilder;
 using Microsoft.AspNetCore.Identity;
 
 namespace BetterRedisIdentity.Stores

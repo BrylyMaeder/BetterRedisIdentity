@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using BetterRedisIdentity.Stores;
+using BetterRedisIdentity.Services;
 
 namespace BetterRedisIdentity
 {
     public static class RedisIdentityStoresExtensions
     {
-        public static IServiceCollection AddRedisIdentityStores<TUser, TRole>(this IServiceCollection services)
+        public static IServiceCollection AddRedisIdentityStores<TUser, TRole>(this IServiceCollection services, bool provideUserService = true)
         where TUser : RedisIdentityUser, new()
         where TRole : RedisIdentityRole, new()
         {
@@ -23,6 +24,10 @@ namespace BetterRedisIdentity
 
             // Register the RedisUserManager
             services.AddScoped<UserManager<TUser>, RedisUserManager<TUser>>();
+
+            // Register optional user service
+            if (provideUserService)
+                services.AddScoped<UserService<TUser>>();
 
             return services;
         }

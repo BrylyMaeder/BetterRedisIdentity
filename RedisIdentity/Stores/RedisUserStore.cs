@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using BetterRedisIdentity.Data;
 using BetterRedisIdentity.Util;
 using System.Security.Claims;
-using AsyncRedisDocuments;
 
 namespace BetterRedisIdentity.Stores
 {
